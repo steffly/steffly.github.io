@@ -7,7 +7,7 @@
   "homepage": "https://github.com/steffly/steffly.github.io",
   "scripts": {
     "predeploy": "yarn run build",
-    "deploy": "gh-pages -d build",
+    "deploy": "gh-pages -d dist",
     "build": "yarn webpack --config ./webpack.config.js",
     "start": "yarn webpack-dev-server --config ./webpack.config.js --hot",
     "node:clean": "rm -rf ./node_modules && yarn cache clean && yarn"
