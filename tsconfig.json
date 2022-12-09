@@ -1,0 +1,42 @@
+{
+    "compilerOptions": {
+        "outDir": "./dist",
+        "baseUrl": "src",
+        "target": "es5",
+        "lib": [
+            "es5",
+            "es2015",
+            "es2016",
+            "es2017.object",
+            "dom"
+        ],
+        "module": "esnext",
+        "moduleResolution": "node",
+        "esModuleInterop": true,
+        "isolatedModules": true,
+        "composite": true,
+        "sourceMap": true,
+        "jsx": "react",
+        "rootDir": "../",
+        "paths": {
+            "@remitly/react-native-remitly-cesdk": ["../src"],
+            "@remitly/react-native-remitly-cesdk/*": ["../src/*"]
+        },
+        "allowJs": true,
+        "types": [],
+        "experimentalDecorators": true,
+        "downlevelIteration": true,
+        "allowUnreachableCode": false,
+        "noImplicitOverride": true,
+        "noImplicitReturns": true,
+        "noUnusedLocals": true,
+        "strict": true,
+        "forceConsistentCasingInFileNames": true
+    },
+    "include": [
+        "../src/**/*",
+        "../example/**/*"
+    ],
+    "exclude": ["node_modules/**/*"],
+    "skipLibCheck": true
+}

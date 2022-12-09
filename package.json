@@ -1,0 +1,69 @@
+{
+  "name": "@remitly/react-native-remitly-cesdk",
+  "version": "0.7.7",
+  "description": "SDK for Remitly's connected experiences",
+  "main": "./index.js",
+  "types": "./index.d.ts",
+  "scripts": {
+    "build": "yarn webpack --config ./webpack.config.js",
+    "start": "yarn webpack-dev-server --config ./webpack.config.js --hot",
+    "node:clean": "rm -rf ./node_modules && yarn cache clean && yarn"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Remitly/remitly-ce-web-sdk"
+  },
+  "author": "Steffee <daniels@remitly.com>",
+  "license": "UNLICENSED",
+  "keywords": [
+    "Remitly",
+    "Connected Experiences"
+  ],
+  "devDependencies": {
+    "@babel/cli": "~7.14.0",
+    "@babel/core": "7.14.8",
+    "@babel/plugin-proposal-class-properties": "~7.14.0",
+    "@babel/plugin-proposal-private-methods": "~7.14.0",
+    "@babel/polyfill": "~7.12.1",
+    "@babel/preset-env": "7.14.8",
+    "@babel/preset-flow": "~7.14.0",
+    "@babel/preset-react": "~7.14.0",
+    "@babel/preset-typescript": "~7.14.0",
+    "@react-native-async-storage/async-storage": "^1.12.1",
+    "@react-native-cookies/cookies": "^6.0.0",
+    "@types/react": "18.0.14",
+    "@types/react-native": "^0.69.5",
+    "@typescript-eslint/parser": "^5.27.1",
+    "babel-loader": "^8.2.5",
+    "babel-plugin-react-native": "^1.0.1",
+    "babel-plugin-react-native-web": "^0.18.9",
+    "babel-plugin-root-import": "^6.5.0",
+    "concurrently": "^4.1.0",
+    "html-webpack-plugin": "^5.5.0",
+    "http-server": "^14.1.1",
+    "react": "18.0.0",
+    "react-dom": "^17.0.2",
+    "react-native": "0.69.0",
+    "react-native-test-app": "^1.6.3",
+    "react-native-web": "^0.18.9",
+    "react-native-webview": "^11.22.3",
+    "ts-loader": "^9.3.1",
+    "typescript": "^4.7.3",
+    "url-loader": "^4.1.1",
+    "webpack": "^5.74.0",
+    "webpack-cli": "^4.10.0",
+    "webpack-dev-server": "^4.10.1"
+  },
+  "peerDependencies": {
+    "@react-native-async-storage/async-storage": "^1.12.1",
+    "@react-native-cookies/cookies": ">=6.0.0",
+    "react-native": ">=0.64.3",
+    "react-native-webview": ">=11.0.0"
+  },
+  "resolutions": {
+    "@types/react": "18.0.14",
+    "react-dom": "17.0.2",
+    "@babel/core": "7.14.8",
+    "@babel/preset-env": "7.14.8"
+  }
+}

@@ -1,0 +1,22 @@
+# Logs
+*.log
+npm-debug.log
+
+# Runtime data
+tmp
+build
+dist
+
+# Dependency directory
+node_modules
+
+# Python
+**/lib/
+**/bin/
+**/__pycache__/
+
+# DS Store
+.DS_Store
+
+# TypeScript cache
+*.tsbuildinfo
