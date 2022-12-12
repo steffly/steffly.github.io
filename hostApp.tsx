@@ -14,6 +14,8 @@ export function HostApp({ env }: HostAppProps) {
     const [remitlyState, setRemitlyState] = useState('closed');
     const [text, setText] = useState('Lorem ipsum dolor sit amet.');
     const [allowIncreasedHeight, setAllowIncreasedHeight] = useState(false);
+    const urlParams = new URLSearchParams(window.location.search);
+    const appId = urlParams.get('host') ?? 'express';
 
     function onMessage(message: string) {
         if (message.length > 100) {
@@ -39,7 +41,7 @@ export function HostApp({ env }: HostAppProps) {
 
     React.useEffect(() => {
         Remitly.initialize({
-            appId: 'passbook',
+            appId,
             customerCountry: 'us',
             customerLanguage: 'en',
             defaultReceiveCountry: 'mexico',
