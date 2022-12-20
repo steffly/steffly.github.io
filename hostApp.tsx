@@ -88,7 +88,7 @@ export function HostApp({ env: defaultEnv }: HostAppProps) {
                 </div>
                 <div style={columnStyle}>
                     <div style={{ ...textStyle, height: '100%', padding: '20px', backgroundColor: 'rgb(0,0,0,0.04)'}}>{text}</div>
-                    {/* <Button color={darkBlue} title={'Add text'} onPress={addText}/> */}
+                    <Button color={darkBlue} title={'Add text'} onPress={addText}/>
                 </div>
             </div>
         </div>
