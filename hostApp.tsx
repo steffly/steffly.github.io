@@ -61,14 +61,14 @@ export function HostApp({ env: defaultEnv }: HostAppProps) {
     const darkBlue = '#226ba4';
     const darkTeal = '#467680';
 
-    let safeAreaViewStyle: React.CSSProperties = { marginTop: '40px', width: '90%', backgroundColor: 'white', display: 'flex', flexDirection: 'row' };
+    let safeAreaViewStyle: React.CSSProperties = { marginTop: '32px', width: '92%', backgroundColor: 'white', display: 'flex', flexDirection: 'row', flexWrap: 'wrap', overflow: 'auto' };
     if (!allowIncreasedHeight) {
-        safeAreaViewStyle.height = '90%';
+        safeAreaViewStyle.height = '92%';
     }
     const columnStyle: React.CSSProperties = { height: '100%', flex: '1 1 50%', padding: '12px', border: `2px solid ${darkTeal}`, boxSizing: 'border-box', display: 'flex', flexDirection: 'column' };
 
     return (
-        <div style={{ margin: '2%', flexGrow: 1, backgroundImage, display: 'flex', justifyContent: 'center' }}>
+        <div style={{ margin: '1%', flexGrow: 1, backgroundImage, display: 'flex', justifyContent: 'center' }}>
             <div style={safeAreaViewStyle}>
                 <div style={columnStyle}>
                     {remitlyState !== 'open' &&

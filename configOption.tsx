@@ -11,17 +11,21 @@ export interface ConfigOptionProps {
 
 export function ConfigOption({ value, label, onChangeText, options }: ConfigOptionProps) {
     return (
-        <div style={{ paddingTop: '12px', display: 'flex', flexDirection: 'row' }}>
-            <Text style={{ width: 128 }}>{label}</Text>
-            <TextInput style={{ borderWidth: 1, padding: 2 }} value={value} onChangeText={onChangeText} />
+        <div style={{ paddingTop: '12px', display: 'flex', flexDirection: 'row', flexWrap: 'wrap' }}>
+            <Text style={{ width: 128, lineHeight: 40 }}>{label}</Text>
+            <div style={{ padding: '8px 0px' }}>
+                <TextInput style={{ borderWidth: 1, height: 24 }} value={value} onChangeText={onChangeText} />
+            </div>
             {options?.length && (
                 <>
-                    <Text style={{ width: 96, textAlign: 'center' }}>Options</Text>
-                    <Picker onValueChange={onChangeText}>
-                        {options.map((option) => 
-                            <Picker.Item value={option} label={option} />
-                        )}
-                    </Picker>
+                    <Text style={{ width: 96, textAlign: 'center', lineHeight: 40 }}>Options</Text>
+                    <div style={{ padding: '8px 0px' }}>
+                        <Picker onValueChange={onChangeText}>
+                            {options.map((option) => 
+                                <Picker.Item value={option} label={option} />
+                            )}
+                        </Picker>
+                    </div>
                 </>
             )}
         </div>
