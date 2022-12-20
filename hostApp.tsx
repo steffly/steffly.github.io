@@ -1,21 +1,27 @@
 import React, { useState } from "react";
-import { Button, SafeAreaView, Text, TextStyle, ViewStyle } from "react-native";
+import { Button } from "react-native";
+import { ConfigOption } from "./configOption";
 import { Remitly } from "./constants";
-import { HostAppProps } from "./types";
+import { Environments, HostAppProps } from "./types";
 
-const textStyle: TextStyle = {
-    fontSize: 18,
-    lineHeight: 24,
-    fontFamily: 'Trebuchet MS'
+const textStyle = {
+    fontSize: '18px',
+    lineHeight: '24px',
+    fontFamily: 'Trebuchet MS',
+    color: 'rgb(0, 0, 0, 0.8)'
 }
 
-export function HostApp({ env }: HostAppProps) {
+export function HostApp({ env: defaultEnv }: HostAppProps) {
     const backgroundImage = 'url(https://i.imgur.com/UKMWpgl.png)';
     const [remitlyState, setRemitlyState] = useState('closed');
-    const [text, setText] = useState('Lorem ipsum dolor sit amet.');
+    const [appId, setAppId] = useState('app_7nVPijUnbBreiULsJPFG2X3');
+    const [modalPosition, setModalPosition] = useState('center');
+    const [customerCountry, setCustomerCountry] = useState('us');
+    const [customerLanguage, setCustomerLanguage] = useState('en');
+    const [receiveCountry, setReceiveCountry] = useState('mexico');
+    const [environment, setEnvironment] = useState<string>(defaultEnv);
+    const [text, setText] = useState('Message channel output:');
     const [allowIncreasedHeight, setAllowIncreasedHeight] = useState(false);
-    const urlParams = new URLSearchParams(window.location.search);
-    const appId = urlParams.get('host') ?? 'express';
 
     function onMessage(message: string) {
         if (message.length > 100) {
@@ -34,23 +40,18 @@ export function HostApp({ env }: HostAppProps) {
         });
     }
 
-    const openRemitlyLeft = () => Remitly.open?.({ modalPosition: 'left' });
-    const openRemitlyRight = () => Remitly.open?.({ modalPosition: 'right' });
-    const openRemitlyCenter = () => Remitly.open?.({ modalPosition: 'center' });
-    const closeRemitly = () => Remitly.close?.();
-
     React.useEffect(() => {
         Remitly.initialize({
             appId,
-            customerCountry: 'us',
-            customerLanguage: 'en',
-            defaultReceiveCountry: 'mexico',
-            environment: env,
+            customerCountry,
+            customerLanguage,
+            defaultReceiveCountry: receiveCountry,
+            environment: environment as Environments,
             enableConsoleLogs: true,
             onMessage,
             onStateChange: setRemitlyState
         });
-    }, []);
+    }, [appId, customerCountry, customerLanguage, receiveCountry, environment]);
 
     function addText() {
         setAllowIncreasedHeight(true);
@@ -58,30 +59,38 @@ export function HostApp({ env }: HostAppProps) {
     }
 
     const darkBlue = '#226ba4';
+    const darkTeal = '#467680';
 
-    let safeAreaViewStyle: ViewStyle = { marginTop: '40px', width: '80%', backgroundColor: 'white', display: 'flex', flexDirection: 'column' };
+    let safeAreaViewStyle: React.CSSProperties = { marginTop: '40px', width: '90%', backgroundColor: 'white', display: 'flex', flexDirection: 'row' };
     if (!allowIncreasedHeight) {
         safeAreaViewStyle.height = '90%';
     }
+    const columnStyle: React.CSSProperties = { height: '100%', flex: '1 1 50%', padding: '12px', border: `2px solid ${darkTeal}`, boxSizing: 'border-box', display: 'flex', flexDirection: 'column' };
 
     return (
-        <div style={{ margin: '4%', flexGrow: 1, backgroundImage, display: 'flex', justifyContent: 'center' }}>
-            <SafeAreaView style={safeAreaViewStyle}>
-                <div style={{ position: 'sticky', top: 0, backgroundColor: 'white' }}>
+        <div style={{ margin: '2%', flexGrow: 1, backgroundImage, display: 'flex', justifyContent: 'center' }}>
+            <div style={safeAreaViewStyle}>
+                <div style={columnStyle}>
                     {remitlyState !== 'open' &&
-                        <div style={{ display: 'flex', width: '100%', justifyContent: 'space-around' }}>
-                            <Button color={darkBlue} title={'Open Remitly Left'} onPress={openRemitlyLeft}/>
-                            <Button color={darkBlue} title={'Open Remitly Center'} onPress={openRemitlyCenter}/>
-                            <Button color={darkBlue} title={'Open Remitly Right'} onPress={openRemitlyRight}/>
-                        </div>}
-                    {(remitlyState === 'open' || remitlyState === 'floating') && <Button color={darkBlue} title={'Close Remitly'} onPress={closeRemitly}/>}
+                            <Button color={darkBlue} title={'Open Remitly'} onPress={() => Remitly.open?.({ modalPosition: modalPosition as 'center' | 'left' | 'right' })}/>
+                    }
+                    {(remitlyState === 'open' || remitlyState === 'floating') && <Button color={darkBlue} title={'Close Remitly'} onPress={() => Remitly.close?.()}/>}
+                    <ConfigOption label={'Environment'} value={environment} onChangeText={setEnvironment} />
+                    <ConfigOption label={'Modal position'} value={modalPosition} onChangeText={setModalPosition} options={['center', 'left', 'right']} />
+                    <ConfigOption label={'App ID'} value={appId} onChangeText={setAppId} options={['passbook', 'express']} />
+                    <ConfigOption label={'Customer country'} value={customerCountry} onChangeText={setCustomerCountry} />
+                    <ConfigOption label={'Receive country'} value={receiveCountry} onChangeText={setReceiveCountry} />
+                    <ConfigOption label={'Language'} value={customerLanguage} onChangeText={setCustomerLanguage} />
+                    <div style={{ flexGrow: 1 }} />
                     <div id={'remitly-button-container'} >
                         <button id={'remitly-button'}>OPEN WITH TRANSFORM</button>
                     </div>
                 </div>
-                <Text style={{ ...textStyle, padding: '20px', flexGrow: 1 }}>{text}</Text>
-                <Button color={darkBlue} title={'Add text'} onPress={addText}/>
-            </SafeAreaView>
+                <div style={columnStyle}>
+                    <div style={{ ...textStyle, height: '100%', padding: '20px', backgroundColor: 'rgb(0,0,0,0.04)'}}>{text}</div>
+                    {/* <Button color={darkBlue} title={'Add text'} onPress={addText}/> */}
+                </div>
+            </div>
         </div>
     );
 }
