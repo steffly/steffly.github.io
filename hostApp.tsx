@@ -41,17 +41,19 @@ export function HostApp({ env: defaultEnv }: HostAppProps) {
     }
 
     React.useEffect(() => {
-        Remitly.initialize({
-            appId,
-            customerCountry,
-            customerLanguage,
-            defaultReceiveCountry: receiveCountry,
-            environment: environment as Environments,
-            enableConsoleLogs: true,
-            onMessage,
-            onStateChange: setRemitlyState
-        });
-    }, [appId, customerCountry, customerLanguage, receiveCountry, environment]);
+        if (Remitly) {
+            Remitly.initialize({
+                appId,
+                customerCountry,
+                customerLanguage,
+                defaultReceiveCountry: receiveCountry,
+                environment: environment as Environments,
+                enableConsoleLogs: true,
+                onMessage,
+                onStateChange: setRemitlyState
+            });
+        }
+    }, [appId, customerCountry, customerLanguage, receiveCountry, environment, Remitly]);
 
     function addText() {
         setAllowIncreasedHeight(true);
