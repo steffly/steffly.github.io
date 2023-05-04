@@ -48,7 +48,7 @@
       return (0,typescript_cookie__WEBPACK_IMPORTED_MODULE_0__.getCookie)(keyBySender(state, REFRESH_TOKEN_KEY)) || undefined;
     }
     function storeRefreshToken(state, token) {
-      document.cookie = "".concat(keyBySender(state, REFRESH_TOKEN_KEY), "=").concat(token, "; Path=/");
+      document.cookie = "".concat(keyBySender(state, REFRESH_TOKEN_KEY), "=").concat(token, "; Path=/; SameSite=Strict");
     }
     function keyBySender(state, subkey) {
       var _a;
