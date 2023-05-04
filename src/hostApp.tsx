@@ -43,9 +43,16 @@ export function HostApp({ env: defaultEnv }: HostAppProps) {
     React.useEffect(() => {
         Remitly.initialize({
             appId,
-            customerCountry,
-            customerLanguage,
-            defaultReceiveCountry: receiveCountry,
+            authCallbackUrl: `http://localhost:8080/callback.html`,
+            sender: {
+                id: '1234',
+                countryCodeAlpha3: customerCountry,
+                languageCode: customerLanguage
+            },
+            recipient: {
+                id: '4567',
+                countryCodeAlpha3: receiveCountry
+            },
             environment: environment as Environments,
             enableConsoleLogs: true,
             onMessage,

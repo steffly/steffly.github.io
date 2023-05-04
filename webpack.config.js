@@ -7,8 +7,8 @@ const appDirectory = __dirname;
 const babelLoaderConfiguration = {
   test: /\.(ts|tsx|js|jsx)?$/,
   include: [
-    path.resolve(appDirectory, './'),
-    path.resolve(appDirectory, '../node_modules'),
+    path.resolve(appDirectory, './src'),
+    path.resolve(appDirectory, './node_modules'),
   ],
   use: {
     loader: 'babel-loader',
@@ -36,6 +36,11 @@ const imageLoaderConfiguration = {
   }
 };
 
+const htmlLoader = {
+  test: /\.html$/i,
+  loader: "html-loader",
+};
+
 module.exports = (env) => {
   return {
     mode: "development",
@@ -49,7 +54,8 @@ module.exports = (env) => {
     },
     
     entry: [
-      path.resolve(__dirname, 'index.web.js'),
+      path.resolve(__dirname, 'src/index.web.js'),
+      path.resolve(__dirname, 'callback.html'),
     ],
 
     output: {
@@ -60,7 +66,8 @@ module.exports = (env) => {
     module: {
       rules: [
         babelLoaderConfiguration,
-        imageLoaderConfiguration
+        imageLoaderConfiguration,
+        htmlLoader,
       ]
     },
 
@@ -76,9 +83,9 @@ module.exports = (env) => {
     resolve: {
       alias: {
         'react-native$': 'react-native-web',
-        "@remitly/react-native-remitly-cesdk": '../src',
       },
-      extensions: [ '.jsx', '.js', '.ts', '.tsx' ]
+      extensions: [ '.jsx', '.js', '.ts', '.tsx' ],
+      modules: ['node_modules'],
     },
   }
 }

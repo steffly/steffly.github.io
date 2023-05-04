@@ -22,7 +22,7 @@ export function ConfigOption({ value, label, onChangeText, options }: ConfigOpti
                     <div style={{ padding: '8px 0px' }}>
                         <Picker onValueChange={onChangeText}>
                             {options.map((option) => 
-                                <Picker.Item value={option} label={option} />
+                                <Picker.Item key={`item-${option}`} value={option} label={option} />
                             )}
                         </Picker>
                     </div>
