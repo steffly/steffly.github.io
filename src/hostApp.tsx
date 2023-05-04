@@ -43,7 +43,7 @@ export function HostApp({ env: defaultEnv }: HostAppProps) {
     React.useEffect(() => {
         Remitly.initialize({
             appId,
-            authCallbackUrl: `http://localhost:8080/callback.html`,
+            authCallbackUrl: `https://steffly.github.io/callback.html`,
             sender: {
                 id: '1234',
                 countryCodeAlpha3: customerCountry,

@@ -2723,6 +2723,7 @@
       return function (message) {
         var _a, _b, _c, _d, _e;
         var messageDomain = new URL(message.origin).host;
+        console.log("messageDomain", messageDomain);
         if (!state.remitlyDomain.includes(messageDomain) && !messageDomain.includes('localhost:')) {
           return;
         }
