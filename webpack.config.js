@@ -48,14 +48,21 @@ module.exports = (env) => {
 
     devServer: {
       hot: true,
-      static: {
-        directory: path.resolve(appDirectory, "dist"),
-      }
+      static: [
+        { directory: path.resolve(__dirname, 'src'), watch: true },
+        { directory: path.resolve(__dirname, 'dist'), watch: true },
+      ],
+      historyApiFallback: {
+        rewrites: [
+          { from: /^\/callback\.html$/, to: '/callback.html' },
+          { from: /./, to: '/index.html' },
+        ],
+      },
     },
     
     entry: [
       path.resolve(__dirname, 'src/index.web.js'),
-      path.resolve(__dirname, 'callback.html'),
+      path.resolve(__dirname, 'src/callback.html'),
     ],
 
     output: {
