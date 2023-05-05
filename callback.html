@@ -2,7 +2,7 @@
     console.log('Callback.html triggered');
     if (!!window.opener) {
         // NOTE: Partners will need to replace this with their own domain
-        const hostDomain = "https://steffly.github.io";
+        const hostDomain = "http://localhost:8882";
 
         const message = JSON.stringify({ topic: 'authCallback', queryString: window.location.search });
         window.opener.postMessage(message, hostDomain);
