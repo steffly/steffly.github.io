@@ -3208,13 +3208,12 @@
         return _regeneratorRuntime().wrap(function _callee5$(_context5) {
           while (1) switch (_context5.prev = _context5.next) {
             case 0:
-              _context5.next = 2;
-              return openSplashSendOrAuth(state);
-            case 2:
               window.addEventListener("message", state.messageListener);
               state.iframe.addEventListener("load", state.loadListener);
               state.mediaQueryList.addEventListener("change", state.mediaListener);
               state.isMobile = (0,_utils__WEBPACK_IMPORTED_MODULE_3__.getIsMobile)();
+              _context5.next = 6;
+              return openSplashSendOrAuth(state);
             case 6:
             case "end":
               return _context5.stop();
@@ -3324,7 +3323,7 @@
       }));
       return _initializeRemitly.apply(this, arguments);
     }
-    console.log('yo yo 123')
+    console.log('yoooo 4')
     var RemitlyGlobals = {
       initialize: (0,_errors__WEBPACK_IMPORTED_MODULE_5__.catchErrors)(initializeRemitly, 'initialize'),
       open: (0,_errors__WEBPACK_IMPORTED_MODULE_5__.catchErrors)( /*#__PURE__*/function () {
