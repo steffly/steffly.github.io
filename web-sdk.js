@@ -2894,7 +2894,9 @@
     var getMessageListener = function getMessageListener(state) {
       return function (message) {
         var _a, _b, _c, _d, _e;
+        console.log('message', JSON.stringify(message));
         var messageDomain = new URL(message.origin).host;
+        console.log('messageDomain', messageDomain, 'remitlyDomain', state.remitlyDomain);
         if (!state.remitlyDomain.includes(messageDomain) && !messageDomain.includes('localhost:')) {
           return;
         }
