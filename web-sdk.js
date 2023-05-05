@@ -2894,10 +2894,8 @@
     var getMessageListener = function getMessageListener(state) {
       return function (message) {
         var _a, _b, _c, _d, _e;
-        console.log('yooooo message', JSON.stringify(message));
         var messageDomain = new URL(message.origin).host;
-        console.log('yooooo messageDomain', messageDomain, 'remitlyDomain', state.remitlyDomain);
-        if (!state.remitlyDomain.includes(messageDomain) && !messageDomain.includes('localhost:')) {
+        if (!state.remitlyDomain.includes(messageDomain) && !state.hostDomain.includes(messageDomain) && !messageDomain.includes('localhost:')) {
           return;
         }
         var event = JSON.parse(message.data);
@@ -3200,27 +3198,12 @@
       }));
       return _openSplashSendOrAuth.apply(this, arguments);
     }
-    function prepareStateOnOpen(_x3) {
-      return _prepareStateOnOpen.apply(this, arguments);
-    }
-    function _prepareStateOnOpen() {
-      _prepareStateOnOpen = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee5(state) {
-        return _regeneratorRuntime().wrap(function _callee5$(_context5) {
-          while (1) switch (_context5.prev = _context5.next) {
-            case 0:
-              window.addEventListener("message", state.messageListener);
-              state.iframe.addEventListener("load", state.loadListener);
-              state.mediaQueryList.addEventListener("change", state.mediaListener);
-              state.isMobile = (0,_utils__WEBPACK_IMPORTED_MODULE_3__.getIsMobile)();
-              _context5.next = 6;
-              return openSplashSendOrAuth(state);
-            case 6:
-            case "end":
-              return _context5.stop();
-          }
-        }, _callee5);
-      }));
-      return _prepareStateOnOpen.apply(this, arguments);
+    function prepareStateOnOpen(state) {
+      openSplashSendOrAuth(state);
+      window.addEventListener("message", state.messageListener);
+      state.iframe.addEventListener("load", state.loadListener);
+      state.mediaQueryList.addEventListener("change", state.mediaListener);
+      state.isMobile = (0,_utils__WEBPACK_IMPORTED_MODULE_3__.getIsMobile)();
     }
     function attachToParent(state) {
       document.body.appendChild(state.iframeContainer);
@@ -3271,7 +3254,7 @@
             }
           }, _callee2);
         }));
-        function open(_x4) {
+        function open(_x3) {
           return _open.apply(this, arguments);
         }
         return open;
@@ -3280,14 +3263,14 @@
         console.log("Please initialize Remitly before calling 'close'");
       }
     };
-    function initializeRemitly(_x5) {
+    function initializeRemitly(_x4) {
       return _initializeRemitly.apply(this, arguments);
     }
     function _initializeRemitly() {
-      _initializeRemitly = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee6(inputConfig) {
+      _initializeRemitly = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee5(inputConfig) {
         var _a, _b, sanitizedConfig, buttonContainer, button, layout, initialState, state;
-        return _regeneratorRuntime().wrap(function _callee6$(_context6) {
-          while (1) switch (_context6.prev = _context6.next) {
+        return _regeneratorRuntime().wrap(function _callee5$(_context5) {
+          while (1) switch (_context5.prev = _context5.next) {
             case 0:
               sanitizedConfig = sanitizeInputConfig(inputConfig);
               buttonContainer = (_a = document.getElementById('remitly-button-container')) !== null && _a !== void 0 ? _a : undefined;
@@ -3317,13 +3300,12 @@
               });
             case 13:
             case "end":
-              return _context6.stop();
+              return _context5.stop();
           }
-        }, _callee6);
+        }, _callee5);
       }));
       return _initializeRemitly.apply(this, arguments);
     }
-    console.log('yoooo 4')
     var RemitlyGlobals = {
       initialize: (0,_errors__WEBPACK_IMPORTED_MODULE_5__.catchErrors)(initializeRemitly, 'initialize'),
       open: (0,_errors__WEBPACK_IMPORTED_MODULE_5__.catchErrors)( /*#__PURE__*/function () {
@@ -3344,7 +3326,7 @@
             }
           }, _callee3);
         }));
-        return function (_x6) {
+        return function (_x5) {
           return _ref2.apply(this, arguments);
         };
       }(), 'open'),
@@ -3352,6 +3334,7 @@
         return outputState.close();
       }, 'close')
     };
+    console.log('yoooo 10')
     window.Remitly = RemitlyGlobals;
     })();
     
