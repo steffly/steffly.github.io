@@ -16,9 +16,9 @@ export function HostApp({ env: defaultEnv }: HostAppProps) {
     const [remitlyState, setRemitlyState] = useState('closed');
     const [appId, setAppId] = useState('app_7nVPijUnbBreiULsJPFG2X3');
     const [modalPosition, setModalPosition] = useState('center');
-    const [customerCountry, setCustomerCountry] = useState('us');
+    const [customerCountry, setCustomerCountry] = useState('USA');
     const [customerLanguage, setCustomerLanguage] = useState('en');
-    const [receiveCountry, setReceiveCountry] = useState('mexico');
+    const [receiveCountry, setReceiveCountry] = useState('MEX');
     const [environment, setEnvironment] = useState<string>(defaultEnv);
     const [text, setText] = useState('Message channel output:');
     const [allowIncreasedHeight, setAllowIncreasedHeight] = useState(false);
