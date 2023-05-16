@@ -3328,7 +3328,6 @@
         return outputState.close();
       }, 'close')
     };
-    console.log('5/8/2023')
     window.Remitly = RemitlyGlobals;
     })();
     
