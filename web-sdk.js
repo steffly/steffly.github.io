@@ -44,13 +44,13 @@
       return userSeen == 'true';
     }
     function recognizeUser(state) {
-      document.cookie = "".concat(keyBySender(state, USER_SEEN_KEY), "=true; Path=/");
+      document.cookie = "".concat(keyBySender(state, USER_SEEN_KEY), "=true; Secure; Path=/");
     }
     function getRefreshToken(state) {
       return (0,typescript_cookie__WEBPACK_IMPORTED_MODULE_0__.getCookie)(keyBySender(state, REFRESH_TOKEN_KEY)) || undefined;
     }
     function storeRefreshToken(state, token) {
-      document.cookie = "".concat(keyBySender(state, REFRESH_TOKEN_KEY), "=").concat(token, "; Path=/; SameSite=Strict");
+      document.cookie = "".concat(keyBySender(state, REFRESH_TOKEN_KEY), "=").concat(token, "; Secure; Path=/; SameSite=Strict");
     }
     function keyBySender(state, subkey) {
       var _a;
@@ -396,7 +396,8 @@
                 method: 'GET',
                 headers: {
                   'Authorization': "Bearer ".concat(token)
-                }
+                },
+                credentials: 'include'
               });
             case 4:
               response = _context2.sent;
@@ -3327,6 +3328,7 @@
         return outputState.close();
       }, 'close')
     };
+    console.log('5/8/2023')
     window.Remitly = RemitlyGlobals;
     })();
     
