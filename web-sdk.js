@@ -272,11 +272,14 @@
         return _regeneratorRuntime().wrap(function _callee7$(_context7) {
           while (1) switch (_context7.prev = _context7.next) {
             case 0:
+              if (!result.access_token) {
+                alert('The access token was nil');
+              }
               if (result.refresh_token) {
                 (0,_utils__WEBPACK_IMPORTED_MODULE_1__.log)(state, "Fetched refresh token");
                 storeRefreshToken(state, result.refresh_token);
               }
-              _context7.next = 3;
+              _context7.next = 4;
               return fetch("".concat((0,_urls__WEBPACK_IMPORTED_MODULE_2__.getApiBase)(state), "/v1/b2b/downgrade_auth"), {
                 method: 'POST',
                 headers: {
@@ -288,21 +291,40 @@
                   target_country_code: state.recipient.countryCodeAlpha3
                 })
               });
-            case 3:
+            case 4:
               downgradeResult = _context7.sent;
-              _context7.next = 6;
+              _context7.next = 7;
               return downgradeResult.json();
-            case 6:
+            case 7:
               downgradeJson = _context7.sent;
               token = downgradeJson.auth_token;
-              _context7.next = 10;
+              if (!token) {
+                alert('The downgraded auth token was nil');
+              }
+              (0,_utils__WEBPACK_IMPORTED_MODULE_1__.log)(state, "Auth complete");
+              _context7.next = 13;
               return (0,_cookiefier__WEBPACK_IMPORTED_MODULE_3__.cookiefy)(state, token);
-            case 10:
+            case 13:
+              (0,_utils__WEBPACK_IMPORTED_MODULE_1__.log)(state, "Cookiefy called");
               recognizeUser(state);
-              sendUrl = (0,_urls__WEBPACK_IMPORTED_MODULE_2__.getSendUrl)(state);
-              (0,_utils__WEBPACK_IMPORTED_MODULE_1__.log)(state, "Auth complete; opening: ".concat(sendUrl));
+              (0,_utils__WEBPACK_IMPORTED_MODULE_1__.log)(state, "User recognized");
+              sendUrl = (0,_urls__WEBPACK_IMPORTED_MODULE_2__.getSendUrl)(state); // After cookiefying the downgraded token, we have to make a subsequent request to see if it still exists;
+              // If it doesn't, the client's browser is blocking cookies for iframes
+              _context7.next = 19;
+              return (0,_cookiefier__WEBPACK_IMPORTED_MODULE_3__.isUserLoggedIn)(state);
+            case 19:
+              if (!_context7.sent) {
+                _context7.next = 24;
+                break;
+              }
+              (0,_utils__WEBPACK_IMPORTED_MODULE_1__.log)(state, "Iframe opening: ".concat(sendUrl));
               state.iframe.setAttribute("src", sendUrl);
-            case 14:
+              _context7.next = 26;
+              break;
+            case 24:
+              (0,_utils__WEBPACK_IMPORTED_MODULE_1__.log)(state, "Popup opening: ".concat(sendUrl));
+              (0,_utils__WEBPACK_IMPORTED_MODULE_1__.openPopup)(sendUrl, 420, 640);
+            case 26:
             case "end":
               return _context7.stop();
           }
@@ -348,7 +370,7 @@
         return _regeneratorRuntime().wrap(function _callee$(_context) {
           while (1) switch (_context.prev = _context.next) {
             case 0:
-              urlPath = "us/en/access/get_cross_domain_cookie_data";
+              urlPath = (0,_urls__WEBPACK_IMPORTED_MODULE_1__.getCountryLangPrefix)(state) + "access/get_cross_domain_cookie_data";
               url = new URL(urlPath, (0,_urls__WEBPACK_IMPORTED_MODULE_1__.getBaseUrl)(state));
               _context.next = 4;
               return fetch(url.toString(), {
@@ -366,7 +388,7 @@
               return response.json();
             case 9:
               _yield$response$json = _context.sent;
-              isUserLoggedIn = _yield$response$json.is_logged_in;
+              isUserLoggedIn = _yield$response$json.is_token_exist;
               deid = _yield$response$json.de_id;
               return _context.abrupt("return", {
                 isUserLoggedIn: isUserLoggedIn,
@@ -389,7 +411,7 @@
         return _regeneratorRuntime().wrap(function _callee2$(_context2) {
           while (1) switch (_context2.prev = _context2.next) {
             case 0:
-              urlPath = "us/en/access/set_access_token";
+              urlPath = (0,_urls__WEBPACK_IMPORTED_MODULE_1__.getCountryLangPrefix)(state) + "access/set_access_token";
               url = new URL(urlPath, (0,_urls__WEBPACK_IMPORTED_MODULE_1__.getBaseUrl)(state));
               _context2.next = 4;
               return fetch(url.toString(), {
@@ -401,16 +423,14 @@
               });
             case 4:
               response = _context2.sent;
-              if (!response.ok) {
-                _context2.next = 9;
+              if (response.ok) {
+                _context2.next = 7;
                 break;
               }
-              (0,_utils__WEBPACK_IMPORTED_MODULE_0__.log)(state, "Auth token cookiefied");
-              _context2.next = 10;
-              break;
-            case 9:
               throw new Error("Failure calling ".concat(urlPath));
-            case 10:
+            case 7:
+              (0,_utils__WEBPACK_IMPORTED_MODULE_0__.log)(state, "Auth token cookiefied");
+            case 8:
             case "end":
               return _context2.stop();
           }
@@ -421,6 +441,8 @@
     function getDeidFromCookie(_x4) {
       return _getDeidFromCookie.apply(this, arguments);
     }
+    // This is a best guess: We can't really know if a user is logged in, because for security reasons
+    // the get_cross_domain_cookie_data API won't tell us if a token is valid, only whether a token exists.
     function _getDeidFromCookie() {
       _getDeidFromCookie = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3(state) {
         return _regeneratorRuntime().wrap(function _callee3$(_context3) {
@@ -923,9 +945,13 @@
     /* harmony export */ __webpack_require__.d(__webpack_exports__, {
     /* harmony export */   "getApiBase": () => (/* binding */ getApiBase),
     /* harmony export */   "getBaseUrl": () => (/* binding */ getBaseUrl),
+    /* harmony export */   "getCountryLangPrefix": () => (/* binding */ getCountryLangPrefix),
     /* harmony export */   "getSendUrl": () => (/* binding */ getSendUrl),
     /* harmony export */   "getSplashUrl": () => (/* binding */ getSplashUrl)
     /* harmony export */ });
+    function getCountryLangPrefix(state) {
+      return "".concat(state.sender.countryCodeAlpha3, "/").concat(state.sender.languageCode, "/");
+    }
     function getApiBase(config) {
       if (config.environment === "development" || config.environment === "staging") {
         return "https://api-preprod.dev.remitly.com";
@@ -954,7 +980,7 @@
     function getSendUrl(state) {
       var _a, _b;
       var baseUrl = getBaseUrl(state);
-      var urlString = [baseUrl, state.sender.countryCodeAlpha3, state.sender.languageCode, 'transfer', 'send'].filter(function (x) {
+      var urlString = [baseUrl, state.sender.countryCodeAlpha3, state.sender.languageCode, 'access', 'onboarding'].filter(function (x) {
         return !!x;
       }).join("/");
       var url = new URL(urlString);
@@ -976,7 +1002,8 @@
     __webpack_require__.r(__webpack_exports__);
     /* harmony export */ __webpack_require__.d(__webpack_exports__, {
     /* harmony export */   "getIsMobile": () => (/* binding */ getIsMobile),
-    /* harmony export */   "log": () => (/* binding */ log)
+    /* harmony export */   "log": () => (/* binding */ log),
+    /* harmony export */   "openPopup": () => (/* binding */ openPopup)
     /* harmony export */ });
     /* harmony import */ var _styles__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./styles */ "./styles.ts");
     
@@ -988,6 +1015,11 @@
         console.log(message);
       }
     };
+    function openPopup(url, width, height) {
+      var top = window.screen.height / 2 - height / 2;
+      var left = window.screen.width / 2 - width / 2;
+      window.open(url.toString(), 'remitlyWindow', "width=".concat(width, ",height=").concat(height, ",top=").concat(top, ",left=").concat(left));
+    }
     
     /***/ }),
     
@@ -3328,6 +3360,7 @@
         return outputState.close();
       }, 'close')
     };
+    console.log('May 17')
     window.Remitly = RemitlyGlobals;
     })();
     
