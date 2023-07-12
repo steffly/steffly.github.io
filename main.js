@@ -2694,7 +2694,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 // Module
-var code = "<" + "script>\n    console.log('Callback.html triggered');\n    if (!!window.opener) {\n        // NOTE: Partners will need to replace this with their own domain\n        const hostDomain = \"https://steffly.github.io\";\n\n        const message = JSON.stringify({ topic: 'authCallback', queryString: window.location.search });\n        window.opener.postMessage(message, hostDomain);\n\n        // window.location.href = \"https://preprod.dev.remitly.com\";\n\n        // const urlParams = new URLSearchParams(window.location.search);\n        // const token = urlParams.get('token');\n        // document.cookie = `token=${token}; path=/`;\n    }\n<" + "/script>\n";
+var code = "<" + "script>\n    console.log('Callback.html triggered');\n    if (!!window.opener) {\n        // NOTE: Partners will need to replace this with their own domain\n        const hostDomain = \"https://steffly.github.io\";\n\n        const message = JSON.stringify({ topic: 'authCallback', queryString: window.location.search });\n        window.opener.postMessage(message, hostDomain);\n        window.close();\n\n        // window.location.href = \"https://preprod.dev.remitly.com\";\n\n        // const urlParams = new URLSearchParams(window.location.search);\n        // const token = urlParams.get('token');\n        // document.cookie = `token=${token}; path=/`;\n    }\n<" + "/script>\n";
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (code);
 
